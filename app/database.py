@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:postgres@postgres:5432/postgres"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:postgres@db:5432/postgres"
 # SQLALCHEMY_DATABASE_URL = "postgresql://diana:password@172.17.0.2:5432/microdb"
 
 

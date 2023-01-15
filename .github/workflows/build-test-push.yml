@@ -12,6 +12,8 @@ jobs:
     - name: Checkout the repo
       uses: actions/checkout@v3
 
+    - name: Run Database container
+      run: docker run -v postgres_data:/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=postgres --name db -d postgres:14.0
     - name: Build the test Docker image
       run: docker build . --file Dockerfile -t bluero/products-service:latest
 
@@ -20,9 +22,6 @@ jobs:
 
     - name: Run Docker container
       run: docker run -p 8000:80 -d bluero/products-service:latest
-    
-    - name: Run Database container
-      run: docker run -v postgres_data:/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=postgres --name db -d postgres:14.0
     
     - name: Set up Python
       uses: actions/setup-python@v4
