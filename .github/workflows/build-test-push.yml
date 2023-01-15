@@ -21,7 +21,7 @@ jobs:
       run: docker run -p 8000:80 -d bluero/products-service:latest
     
     - name: Run Databse container
-      run: docker run -v postgres_data:/var/lib/postgresql/data/ -p 5432:5432 -e POSTGRES_USER=diana -e POSTGRES_PASSWORD=password -e POSTGRES_DB=postgres --name db -d postgres:14.0
+      run: docker run -v postgres_data:/var/lib/postgresql/data/ -p 5432:5432 -e POSTGRES_USER=diana -e POSTGRES_PASSWORD=password -e POSTGRES_DB=microdb --name db -d postgres:14.0
     
     - name: Set up Python
       uses: actions/setup-python@v4
