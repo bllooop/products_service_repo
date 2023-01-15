@@ -47,6 +47,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./authorization_service
+          context: ./products_service
           push: true
           tags: bluero/products-service:latest
