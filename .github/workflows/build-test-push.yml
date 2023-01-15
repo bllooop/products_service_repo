@@ -8,16 +8,22 @@ jobs:
   test-push: 
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+  services:
+  postgres:
+    image: postgres
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: microdb
+    ports:
+      - 5432:5432
+    options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    env:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: postgres
 
     steps:
     - name: Checkout the repo
@@ -25,17 +31,7 @@ jobs:
 
     - name: Build the test Docker image
       run: docker build . --file Dockerfile -t bluero/products-service:latest
-
-
-
-    - name: Run Docker container
-      run: docker run -p 8000:80 -d bluero/products-service:latest
-
-     - name: Connect to PostgreSQL
-      env:
-        POSTGRES_HOST: postgres
-        POSTGRES_PORT: 5432
-  
+    
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
