@@ -1,0 +1,130 @@
+{
+    "$schema": "https://www.krakend.io/schema/v3.json",
+    "version": 3,
+    "endpoints": [
+
+            {
+              "endpoint": "/v1/products",
+              "method": "GET",
+              "backend": [
+                {
+                  "url_pattern": "/v1/products",
+                  "method": "GET",
+                  "host": [ "http://products" ],
+                  "is_collection": true,
+                  "mapping": {
+                    "collection": "products"
+                  }
+                }
+              ]
+            },
+            {
+              "endpoint": "/v1/products",
+              "method": "POST",
+              "backend": [
+                {
+                  "url_pattern": "/v1/products",
+                  "method": "POST",
+                  "host": [ "http://products" ]
+                }
+              ]
+            },
+            {
+              "endpoint": "/v1/shops",
+              "method": "POST",
+              "backend": [
+                {
+                  "url_pattern": "/v1/shops",
+                  "method": "POST",
+                  "host": [ "http://shops" ]
+                }
+              ]
+            },
+            {
+                "endpoint": "/v1/products/{id}",
+                "method": "GET",
+                "output_encoding": "no-op",
+                "backend": [
+                  {
+                    "encoding": "no-op",
+                    "url_pattern": "/v1/products/{id}",
+                    "method": "GET",
+                    "host": [ "http://products" ]
+                  }
+                ]
+              },
+              {
+                "endpoint": "/v1/shops",
+                "method": "GET",
+                "backend": [
+                  {
+                    "url_pattern": "/v1/shops",
+                    "method": "GET",
+                    "host": [ "http://shops" ],
+                    "is_collection": true,
+                    "mapping": {
+                      "collection": "shops"
+                    }
+                  }
+                ]
+              },
+              {
+                "endpoint": "/v1/shops/{id}",
+                "method": "GET",
+                "output_encoding": "no-op",
+                "backend": [
+                  {
+                    "encoding": "no-op",
+                    "url_pattern": "/v1/shops/{id}",
+                    "method": "GET",
+                    "host": [ "http://shops" ]
+                  }
+                ]
+              },
+              {
+                "endpoint": "/v1/data",
+                "method": "GET",
+                "backend": [
+                    {
+                        "url_pattern": "/v1/products",
+                        "method": "GET",
+                        "host": [ "http://products" ],
+                        "is_collection": true,
+                        "mapping": {
+                          "collection": "products"
+                        }
+                    },
+                    {
+                        "url_pattern": "/v1/shops",
+                        "method": "GET",
+                        "host": [ "http://shops" ],
+                        "is_collection": true,
+                        "mapping": {
+                          "collection": "shops"
+                        }
+                      }
+                  ]
+              }
+          ],
+          "extra_config": {
+            "telemetry/opencensus": {
+              "sample_rate": 100,
+              "reporting_period": 0,
+              "exporters": {
+                "jaeger": {
+                  "endpoint": "http://jaeger:14268/api/traces",
+                  "service_name":"krakend",
+                  "buffer_max_count": 1000
+                },
+                "prometheus": {
+                  "port": 9091,
+                  "namespace": "krakend",
+                  "tag_host": false,
+                  "tag_path": true,
+                  "tag_method": true,
+                  "tag_statuscode": false
+              }
+              }
+            }
+          }
+}
