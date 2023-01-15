@@ -3,8 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-SQLALCHEMY_DATABASE_URL = "postgresql://diana:password@db:5432/microdb"
-# SQLALCHEMY_DATABASE_URL = "postgresql://diana:password@localhost/microdb"
+SQLALCHEMY_DATABASE_URL = "postgresql://diana:password@172.17.0.2:5432/microdb"
+# SQLALCHEMY_DATABASE_URL = "postgresql://diana:password@172.17.0.2:5432/microdb"
 
 
 engine = create_engine(
