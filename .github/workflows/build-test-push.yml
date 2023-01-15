@@ -14,7 +14,25 @@ jobs:
 
     - name: Build the test Docker image
       run: docker build . --file Dockerfile -t bluero/products-service:latest
+
+
+
+    - name: Run Docker container
+      run: docker run -p 8000:80 -d bluero/products-service:latest
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+      
+    - name: Install packages
+      run: pip install pytest requests
+    
+    - name: Run tests
+      run: pytest
         
+
+
     - name: Login into Docker Hub
       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
       with:
