@@ -23,9 +23,8 @@ def create(details: schemas.CreateProduct, db: Session = Depends(get_db)):
     }
 
 @app.get("/v1/products")
-async def read_products(db: Session = Depends(get_db), skip: int = 0, limit: int = 100):
-    products = crud.get_products(db, skip=skip, limit=limit)
-    return products
+async def read_products():
+    return "test"
 
 
 @app.get("/v1/products/{id}")
