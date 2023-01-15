@@ -8,16 +8,6 @@ jobs:
   test-push: 
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:14
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: ci_db_test
-        ports:
-          - 5432:5432
-
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v3
@@ -29,7 +19,10 @@ jobs:
 
     - name: Run Docker container
       run: docker run -p 8000:80 -d bluero/products-service:latest
-        
+    
+    - name: Run Databse container
+      run: docker run -v postgres_data:/var/lib/postgresql/data/ -p 5432:5432 -e POSTGRES_USER=diana -e POSTGRES_PASSWORD=password -e POSTGRES_DB=postgres --name db -d postgres:14.0
+    
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
